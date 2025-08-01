@@ -18,12 +18,12 @@ make build
 ./bin/gnd init
 ```
 
-## 🎯Project goals
+## 🎯 Project goals
 
 This project serves multiple purposes:
 - **Learning Go** - Exploring Go's strengths in CLI application development
 
-## 🧪Development
+## 🧪 Development
 
 ### Prerequisites
 - Go 1.21 or higher

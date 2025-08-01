@@ -127,20 +127,3 @@ func TestManager_ConfigExists(t *testing.T) {
 		t.Error("Config should exist after saving")
 	}
 }
-
-func TestManager_GetConfig(t *testing.T) {
-	m := New("/test")
-	testCharacter := "TestCharacter"
-	m.SetActiveCharacter(testCharacter)
-
-	config := m.GetConfig()
-	if config.ActiveCharacter != testCharacter {
-		t.Errorf("Expected %q, got %q", testCharacter, config.ActiveCharacter)
-	}
-
-	config.ActiveCharacter = "Modified"
-
-	if m.GetActiveCharacter() == "Modified" {
-		t.Error("GetCongig should return a copy, not a reference")
-	}
-}

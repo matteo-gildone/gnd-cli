@@ -11,13 +11,18 @@ type Config struct {
 	ActiveCharacter string `json:"active_character"`
 }
 
+func (c *Config) SetActiveCharacter(name string) {
+	c.ActiveCharacter = name
+}
+
 type Manager struct {
+	Config
 	configDir string
-	config    Config
 }
 
 func New(configDir string) *Manager {
 	m := &Manager{
+		Config:    Config{},
 		configDir: configDir,
 	}
 
@@ -60,7 +65,7 @@ func (m *Manager) EnsureConfigDir() error {
 
 func (m *Manager) Save() error {
 	configPath := filepath.Join(m.configDir, "config.json")
-	data, err := json.MarshalIndent(m.config, "", "    ")
+	data, err := json.MarshalIndent(m.Config, "", "    ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal config: %w", err)
 	}
@@ -83,7 +88,7 @@ func (m *Manager) Load() error {
 		return fmt.Errorf("failed to read config file: %w", err)
 	}
 
-	if err := json.Unmarshal(data, &m.config); err != nil {
+	if err := json.Unmarshal(data, &m.Config); err != nil {
 		return fmt.Errorf("failed to parse config file: %w", err)
 	}
 
@@ -91,19 +96,11 @@ func (m *Manager) Load() error {
 }
 
 func (m *Manager) GetActiveCharacter() string {
-	return m.config.ActiveCharacter
+	return m.Config.ActiveCharacter
 }
 
 func (m *Manager) GetCharacterFolder() string {
 	return filepath.Join(m.configDir, "characters")
-}
-
-func (m *Manager) SetActiveCharacter(name string) {
-	m.config.ActiveCharacter = name
-}
-
-func (m *Manager) GetConfig() Config {
-	return m.config
 }
 
 func (m *Manager) Exists() bool {

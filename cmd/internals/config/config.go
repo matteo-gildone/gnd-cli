@@ -15,6 +15,10 @@ func (c *Config) SetActiveCharacter(name string) {
 	c.ActiveCharacter = name
 }
 
+func (c *Config) GetActiveCharacter() string {
+	return c.ActiveCharacter
+}
+
 type Manager struct {
 	Config
 	configDir string
@@ -93,10 +97,6 @@ func (m *Manager) Load() error {
 	}
 
 	return nil
-}
-
-func (m *Manager) GetActiveCharacter() string {
-	return m.Config.ActiveCharacter
 }
 
 func (m *Manager) GetCharacterFolder() string {

@@ -1,7 +1,9 @@
 # Gopher and Dragons
 
-![GitHub License](https://img.shields.io/github/license/matteo-gildone/gnd-cli)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/matteo-gildone/gnd-cli)
+[![Go](https://github.com/matteo-gildone/gnd-cli/actions/workflows/go.yml/badge.svg)](https://github.com/matteo-gildone/gnd-cli/actions/workflows/go.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/matteo-gildone/gnd-cli)](https://goreportcard.com/report/github.com/matteo-gildone/gnd-cli)
+![GitHub License](https://img.shields.io/github/license/matteo-gildone/gnd-cli)
 
 A git-inspired command-line interface for creating and managing D&D 5e characters.
 Built with Go and designed for speed, simplicity and extensibility.

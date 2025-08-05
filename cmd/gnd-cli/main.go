@@ -15,9 +15,7 @@ func main() {
 }
 
 func run(args []string, stdout, stderr io.Writer) int {
-	commandsDispatcher := commands.New()
-	commandsDispatcher.Stdout = stdout
-	commandsDispatcher.Stderr = stderr
+	commandsDispatcher := commands.New(stdout, stderr)
 
 	if err := commandsDispatcher.Dispatch(args); err != nil {
 		_, _ = fmt.Fprintf(stderr, "Error running the app %v\n", err)

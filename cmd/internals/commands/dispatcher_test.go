@@ -7,7 +7,10 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	dispatcher := New()
+	var stdout, stderr bytes.Buffer
+
+	dispatcher := New(&stdout, &stderr)
+
 	if dispatcher == nil {
 		t.Fatal("New() returned nil")
 	}
@@ -57,9 +60,7 @@ func TestDispatcher_Dispatch(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
 
-			dispatcher := New()
-			dispatcher.Stdout = &stdout
-			dispatcher.Stderr = &stderr
+			dispatcher := New(&stdout, &stderr)
 
 			err := dispatcher.Dispatch(tt.args)
 
@@ -91,9 +92,7 @@ func TestDispatcher_Dispatch(t *testing.T) {
 func TestDispatcher_printUsage(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 
-	dispatcher := New()
-	dispatcher.Stdout = &stdout
-	dispatcher.Stderr = &stderr
+	dispatcher := New(&stdout, &stderr)
 
 	err := dispatcher.printUsage()
 

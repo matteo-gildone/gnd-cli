@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"io"
-	"os"
 )
 
 type Dispatcher struct {
@@ -11,10 +10,10 @@ type Dispatcher struct {
 	Stderr io.Writer
 }
 
-func New() *Dispatcher {
+func New(stdout, stderr io.Writer) *Dispatcher {
 	return &Dispatcher{
-		Stdout: os.Stdout,
-		Stderr: os.Stderr,
+		Stdout: stdout,
+		Stderr: stderr,
 	}
 }
 

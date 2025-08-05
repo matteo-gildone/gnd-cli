@@ -1,11 +1,21 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+	"os"
+)
 
-type Dispatcher struct{}
+type Dispatcher struct {
+	Stdout io.Writer
+	Stderr io.Writer
+}
 
 func New() *Dispatcher {
-	return &Dispatcher{}
+	return &Dispatcher{
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}
 }
 
 func (d Dispatcher) Dispatch(args []string) error {
@@ -15,7 +25,7 @@ func (d Dispatcher) Dispatch(args []string) error {
 
 	switch args[1] {
 	case "init":
-		fmt.Println("Initialise app")
+		_, _ = fmt.Fprintf(d.Stdout, "Initialise app")
 		return nil
 	default:
 		return fmt.Errorf("unknown command: %s", args[1])
@@ -32,6 +42,6 @@ Examples:
 	gnd init
 
 `
-	fmt.Print(usage)
+	_, _ = fmt.Fprint(d.Stdout, usage)
 	return nil
 }

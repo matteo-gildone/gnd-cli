@@ -3,14 +3,25 @@ package main
 import (
 	"fmt"
 	"github.com/matteo-gildone/gnd-cli/cmd/internals/commands"
+	"io"
 	"os"
 )
 
 func main() {
-	commandsDispatcher := commands.New()
-
-	if err := commandsDispatcher.Dispatch(os.Args); err != nil {
-		fmt.Fprintf(os.Stderr, "Error running the app %v\n", err)
-		os.Exit(1)
+	exitCode := run(os.Args, os.Stdout, os.Stderr)
+	if exitCode != 0 {
+		os.Exit(exitCode)
 	}
+}
+
+func run(args []string, stdout, stderr io.Writer) int {
+	commandsDispatcher := commands.New()
+	commandsDispatcher.Stdout = stdout
+	commandsDispatcher.Stderr = stderr
+
+	if err := commandsDispatcher.Dispatch(args); err != nil {
+		_, _ = fmt.Fprintf(stderr, "Error running the app %v\n", err)
+		return 1
+	}
+	return 0
 }

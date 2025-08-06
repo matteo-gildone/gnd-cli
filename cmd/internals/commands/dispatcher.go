@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"io"
+	"os"
 )
 
 type Dispatcher struct {
@@ -24,7 +25,15 @@ func (d Dispatcher) Dispatch(args []string) error {
 
 	switch args[1] {
 	case "init":
-		_, _ = fmt.Fprintf(d.Stdout, "Initialise app")
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return fmt.Errorf("failed to get user home directory %w", err)
+		}
+		err, appDir := EnsureAppDir(homeDir)
+		if err != nil {
+			return fmt.Errorf("init command error %w", err)
+		}
+		_, _ = fmt.Fprintf(d.Stdout, "Initialise app in: %s\n", appDir)
 		return nil
 	default:
 		return fmt.Errorf("unknown command: %s", args[1])

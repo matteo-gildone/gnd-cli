@@ -7,6 +7,11 @@ import (
 	"os"
 )
 
+const (
+	Success = iota
+	Error
+)
+
 func main() {
 	exitCode := run(os.Args, os.Stdout, os.Stderr)
 	if exitCode != 0 {
@@ -19,7 +24,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 
 	if err := commandsDispatcher.Dispatch(args); err != nil {
 		_, _ = fmt.Fprintf(stderr, "Error running the app %v\n", err)
-		return 1
+		return Error
 	}
-	return 0
+	return Success
 }

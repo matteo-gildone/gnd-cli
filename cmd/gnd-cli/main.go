@@ -23,7 +23,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 	commandsDispatcher := commands.New(stdout, stderr)
 
 	if err := commandsDispatcher.Dispatch(args); err != nil {
-		_, _ = fmt.Fprintf(stderr, "Error running the app %v\n", err)
+		_, _ = fmt.Fprintf(stderr, "gnd: %v\n", err)
 		return Error
 	}
 	return Success

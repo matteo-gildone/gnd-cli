@@ -9,7 +9,7 @@ import (
 func TestManager_EnsureConfigDir(t *testing.T) {
 	configDir := t.TempDir()
 
-	err, _ := EnsureAppDir(configDir)
+	_, err := EnsureAppDir(configDir)
 
 	if err != nil {
 		t.Fatalf("EnsureConfigDir failed %v", err)

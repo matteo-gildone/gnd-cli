@@ -29,12 +29,14 @@ func (d Dispatcher) Dispatch(args []string) error {
 		if err != nil {
 			return fmt.Errorf("failed to get user home directory %w", err)
 		}
-		err, appDir := EnsureAppDir(homeDir)
+		appDir, err := EnsureAppDir(homeDir)
 		if err != nil {
 			return fmt.Errorf("init command error %w", err)
 		}
 		_, _ = fmt.Fprintf(d.Stdout, "Initialise app in: %s\n", appDir)
 		return nil
+	case "help":
+		return d.printUsage()
 	default:
 		return fmt.Errorf("unknown command: %s", args[1])
 	}
@@ -47,7 +49,7 @@ Usage:
 	gnd init 	Initialise app
 
 Examples:
-	gnd init
+	gnd init # Creates ~/.gnd directory structure
 
 `
 	_, _ = fmt.Fprint(d.Stdout, usage)

@@ -37,6 +37,12 @@ func TestDispatcher_Dispatch(t *testing.T) {
 			wantOutput: "Initialise app",
 		},
 		{
+			name:       "help command success",
+			args:       []string{"gnd", "help"},
+			wantErr:    false,
+			wantOutput: "Usage:",
+		},
+		{
 			name:       "unknown command",
 			args:       []string{"gnd", "unknown"},
 			wantErr:    true,

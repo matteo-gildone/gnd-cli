@@ -11,7 +11,7 @@ const (
 	charactersDir = "characters"
 )
 
-func EnsureAppDir(homeDir string) (error, string) {
+func EnsureAppDir(homeDir string) (string, error) {
 	configDir := filepath.Join(homeDir, appDir)
 
 	dirs := []string{
@@ -21,9 +21,9 @@ func EnsureAppDir(homeDir string) (error, string) {
 
 	for _, dir := range dirs {
 		if err := os.MkdirAll(dir, 0755); err != nil {
-			return fmt.Errorf("failed create directory %s: %w", dir, err), ""
+			return "", fmt.Errorf("failed create directory %s: %w", dir, err)
 		}
 	}
 
-	return nil, configDir
+	return configDir, nil
 }

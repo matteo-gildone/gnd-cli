@@ -24,7 +24,7 @@ func TestRun(t *testing.T) {
 			name:         "unknown command returns error and exit code 1",
 			args:         []string{"gnd", "unknown"},
 			wantExitCode: 1,
-			wantStderr:   "Error running the app unknown command: unknown\n",
+			wantStderr:   "gnd: unknown command: unknown\n",
 		},
 		{
 			name:         "no command shows usage and returns 0",
@@ -48,7 +48,7 @@ func TestRun(t *testing.T) {
 			name:         "multiple unknown commands still return proper error",
 			args:         []string{"gnd", "badcommand"},
 			wantExitCode: 1,
-			wantStderr:   "Error running the app unknown command: badcommand\n",
+			wantStderr:   "gnd: unknown command: badcommand\n",
 		},
 	}
 
@@ -120,7 +120,7 @@ func TestRun_EdgeCases(t *testing.T) {
 			t.Errorf("expected exit code 1 for unknown command, got %d", exitCode)
 		}
 
-		expectedError := "Error running the app unknown command: " + longCommand + "\n"
+		expectedError := "gnd: unknown command: " + longCommand + "\n"
 		if stderr.String() != expectedError {
 			t.Errorf("stderr = %q, want %q", stderr.String(), expectedError)
 		}

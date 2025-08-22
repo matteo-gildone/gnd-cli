@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/matteo-gildone/gnd-cli/cmd/internals/commands"
 	"io"
 	"os"
+
+	"github.com/matteo-gildone/gnd-cli/cmd/internals/commands"
 )
 
 const (
@@ -20,7 +21,7 @@ func main() {
 }
 
 func run(args []string, stdout, stderr io.Writer) int {
-	commandsDispatcher := commands.New(stdout, stderr)
+	commandsDispatcher, _ := commands.New(stdout, stderr)
 
 	if err := commandsDispatcher.Dispatch(args); err != nil {
 		_, _ = fmt.Fprintf(stderr, "gnd: %v\n", err)

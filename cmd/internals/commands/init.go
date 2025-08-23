@@ -36,12 +36,11 @@ func handleInit(d *Dispatcher, _ []string) error {
 	}
 
 	for _, dir := range dirs {
-		_, _ = fmt.Fprintf(d.Stdout, "📁 Creating directory: %s\n", dir)
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			return fmt.Errorf("failed create directory %s: %w", dir, err)
 		}
-		_, _ = fmt.Fprintf(d.Stdout, "✅ %s created!\n", dir)
 	}
 
+	_, _ = fmt.Fprintf(d.Stdout, "Initialise app in: %s\n", configDir)
 	return nil
 }

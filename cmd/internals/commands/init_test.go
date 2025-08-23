@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -33,4 +34,23 @@ func Test_handleInit(t *testing.T) {
 		}
 	}
 
+}
+
+func Test_handleInit_InvalidHomeDir(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+
+	d := &Dispatcher{
+		Stdout:  &stdout,
+		Stderr:  &stderr,
+		HomeDir: "/invalid/nonexistent/path",
+	}
+
+	err := handleInit(d, []string{})
+	if err == nil {
+		t.Fatal("Expected error using invalid home directory, but got none")
+	}
+
+	if !strings.Contains(err.Error(), "failed create directory") {
+		t.Errorf("Expected error message about directory creation, got: %v", err)
+	}
 }

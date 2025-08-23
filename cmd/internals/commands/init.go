@@ -1,6 +1,15 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+)
+
+const (
+	appDir        = ".gnd"
+	charactersDir = "characters"
+)
 
 func init() {
 	Register(&Command{
@@ -14,31 +23,25 @@ func init() {
 	})
 }
 
-func handleInit(d *Dispatcher, args []string) error {
-	_, _ = fmt.Fprintf(d.Stdout, "  🎲 Initialising Gophers and Dragons in: %s\n", d.HomeDir)
-	_, _ = fmt.Fprintf(d.Stdout, "  📁 Created character directory in: %s\n", d.HomeDir+"characters")
-	_, _ = fmt.Fprintf(d.Stdout, "  ✅ Initialisation completed!\n")
+func handleInit(d *Dispatcher, _ []string) error {
+	configDir := filepath.Join(d.HomeDir, appDir)
+	_, err := os.Stat(configDir)
+	if err == nil {
+		_, _ = fmt.Fprintf(d.Stdout, "Reinitialized existing app in %s\n\n", configDir)
+	}
+
+	dirs := []string{
+		configDir,
+		filepath.Join(configDir, charactersDir),
+	}
+
+	for _, dir := range dirs {
+		_, _ = fmt.Fprintf(d.Stdout, "📁 Creating directory: %s\n", dir)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return fmt.Errorf("failed create directory %s: %w", dir, err)
+		}
+		_, _ = fmt.Fprintf(d.Stdout, "✅ %s created!\n", dir)
+	}
+
 	return nil
 }
-
-//const (
-//	appDir        = ".gnd"
-//	charactersDir = "characters"
-//)
-//
-//func EnsureAppDir(homeDir string) (string, error) {
-//	configDir := filepath.Join(homeDir, appDir)
-//
-//	dirs := []string{
-//		configDir,
-//		filepath.Join(configDir, charactersDir),
-//	}
-//
-//	for _, dir := range dirs {
-//		if err := os.MkdirAll(dir, 0755); err != nil {
-//			return "", fmt.Errorf("failed create directory %s: %w", dir, err)
-//		}
-//	}
-//
-//	return configDir, nil
-//}

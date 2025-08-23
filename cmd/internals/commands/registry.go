@@ -11,6 +11,10 @@ var registry = &CommandRegistry{
 }
 
 func Register(cmd *Command) {
+	if cmd == nil {
+		return
+	}
+
 	registry.commands[cmd.Name] = cmd
 }
 

@@ -9,9 +9,6 @@ func init() {
 		Usage:       "gnd character",
 		Examples: []string{
 			"gnd character # List of characters",
-			"gnd character # List of characters",
-			"gnd character # List of characters",
-			"gnd character # List of characters",
 		},
 		Handler: handleCreate,
 	})
